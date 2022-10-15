@@ -1,0 +1,71 @@
+{% extends "./layout.peb" %}
+
+{% block content %}
+<div class="grid-x grid-padding-x">
+    {% if model.webForm.errors is not empty %}
+    <div class="grid-container">
+        <div class="grid-x grid-padding-y">
+            <div class="medium-12 cell warning">
+                <ul>
+                    {% for error in model.webForm.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <form method="POST">
+        <div class="grid-x grid-padding-x">
+                <a class="clear button" href="/equipment">Назад</a>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-4 medium-4 cell">
+                <label>Имя</label>
+                <input name="name" type="text"
+                    {% if model.name is not null %}
+                        value="{{ model.name }}"
+                    {% else %}
+                        value="{{ model.webForm.fields["name"] | first }}"
+                    {% endif %}
+                >
+            </div>
+            <div class="large-4 medium-4 cell">
+                <label>ID продукта</label>
+                <input name="productId" type="text"
+                    {% if model.productId is not null %}
+                        value="{{ model.productId }}"
+                    {% else %}
+                        value="{{ model.webForm.fields["productId"] | first }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x">
+            <div class="large-12 cell">
+                <label>Дополнительная информация</label>
+                <textarea name="description">
+                    {% if model.description is not null %}
+                        value="{{ model.description }}"
+                    {% else %}
+                        value="{{ model.webForm.fields["description"] | first }}"
+                    {% endif %}
+                </textarea>
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x>
+            <div class="large-4 medium-4 cell">
+                <label>Дата приема</label>
+                <input name="submissionDate" type="date"
+                    {% if model.submissionDate is not null %}
+                        value="{{ model.submissionDate }}"
+                    {% else %}
+                        value="{{ model.webForm.fields["submissionDate"] | first }}"
+                    {% endif %}
+                >
+                <input type="submit" value="Изменить" class="button">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
