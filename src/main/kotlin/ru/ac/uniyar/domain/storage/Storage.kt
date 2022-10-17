@@ -6,11 +6,12 @@ import java.util.UUID
 data class Storage(
     val employeeRepository: EmployeeRepository,
     val equipmentRepository: EquipmentRepository,
+    val rolePermissionsRepository: RolePermissionsRepository,
 )
 
 fun initializeRepositoryStorage(): Storage {
     val adminRole = RolePermissions(
-        id = UUID.randomUUID(),
+        id = UUID.fromString("28661a42-7f48-4962-a4ac-31dac0dca5ac"),
         name = "Admin",
         showEmployees = true,
         showEmployee = true,
@@ -18,17 +19,8 @@ fun initializeRepositoryStorage(): Storage {
         showEquipmentItem = false
     )
 
-    val guestRole = RolePermissions(
-        id = UUID.randomUUID(),
-        name = "Guest",
-        showEmployees = false,
-        showEmployee = false,
-        showEquipment = false,
-        showEquipmentItem = false
-    )
-
     val employeeRole = RolePermissions(
-        id = UUID.randomUUID(),
+        id = UUID.fromString("c3783767-7876-4f6d-b56c-66e4607ce9ca"),
         name = "Employee",
         showEmployees = false,
         showEmployee = false,
@@ -36,22 +28,33 @@ fun initializeRepositoryStorage(): Storage {
         showEquipmentItem = true
     )
 
+    val rolePermissionsRepository: RolePermissionsRepository = RolePermissionsRepository(listOf(
+        adminRole,
+        employeeRole,
+    ))
+
     val petr = Employee(
         id = UUID.fromString("8333f4b1-322e-4baa-be42-05079d9fbb95"),
+        roleId = adminRole.id,
         name = "Пётр Васильевич Григорьев",
         login = "petr",
+        password = "ca5dd103f5644ce0196ca3d0a80ff22b25965110f005fc6b914f2ed90b9930d323bb89ab5b67590ce7a24d73e847d354ba6dd0f6cb69b4d3e9f2dd8d26d0535c",
         phone = "+790000000001",
     )
     val ivan = Employee(
         id = UUID.fromString("c9096a41-b3c5-485a-8756-fd5056a8a944"),
+        roleId = employeeRole.id,
         name = "Иван Сергеевич Ушаков",
         login = "ivan",
+        password = "ca5dd103f5644ce0196ca3d0a80ff22b25965110f005fc6b914f2ed90b9930d323bb89ab5b67590ce7a24d73e847d354ba6dd0f6cb69b4d3e9f2dd8d26d0535c",
         phone = "+790000000002",
     )
     val irina = Employee(
         id = UUID.fromString("8d93f93f-d491-45ed-ac94-66ad04a01e00"),
+        roleId = employeeRole.id,
         name = "Ирина Николаевна Кук",
         login = "irina",
+        password = "ca5dd103f5644ce0196ca3d0a80ff22b25965110f005fc6b914f2ed90b9930d323bb89ab5b67590ce7a24d73e847d354ba6dd0f6cb69b4d3e9f2dd8d26d0535c",
         phone = "+790000000003",
     )
     val employeeRepository = EmployeeRepository(listOf(
@@ -81,5 +84,6 @@ fun initializeRepositoryStorage(): Storage {
     return Storage(
         employeeRepository = employeeRepository,
         equipmentRepository = equipmentRepository,
+        rolePermissionsRepository = rolePermissionsRepository,
     )
 }

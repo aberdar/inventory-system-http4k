@@ -7,6 +7,7 @@ import ru.ac.uniyar.domain.operations.FetchEmployeeOperation
 import ru.ac.uniyar.domain.storage.Employee
 import ru.ac.uniyar.web.models.EditFormEmployeeViewModel
 import ru.ac.uniyar.web.templates.ContextAwareViewRender
+import java.util.*
 
 class EditFormEmployeeHandler(
     private val fetchEmployeeOperation: FetchEmployeeOperation,
@@ -51,10 +52,12 @@ class ApplyEditFormEmployeeHandler(
         if (webForm.errors.isEmpty()) {
             editEmployeeOperation.edit(
                 Employee(
-                    employeeToEdit.id,
-                    nameLens(webForm),
-                    loginLens(webForm),
-                    phoneLens(webForm)
+                    id = employeeToEdit.id,
+                    roleId = employeeToEdit.roleId,
+                    name = nameLens(webForm),
+                    login = loginLens(webForm),
+                    password = employeeToEdit.password,
+                    phone = phoneLens(webForm)
                 )
             )
             return Response(Status.FOUND).header("location", "/employees/${employeeToEdit.id}")

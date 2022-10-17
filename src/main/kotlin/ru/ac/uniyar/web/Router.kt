@@ -12,6 +12,10 @@ fun formRouter(
 ) = routes(
     "/" bind Method.GET to handlerStorage.showStartPageHandler,
 
+    "/login" bind Method.GET to handlerStorage.showLoginFormHandler,
+    "/login" bind Method.POST to handlerStorage.authorizationUserHandler,
+    "/logout" bind Method.GET to handlerStorage.logOutUserHandler,
+
     "/employees" bind Method.GET to handlerStorage.showEmployeesHandler,
     "/employees/new" bind Method.GET to handlerStorage.inputDataEmployeeHandler,
     "/employees/new" bind Method.POST to handlerStorage.enterDataEmployeeHandler,

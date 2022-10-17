@@ -22,10 +22,12 @@ class AddEmployeeOperationImplementation(
     ): UUID {
         return employeeRepository.add(
             Employee(
-                UUID(0,0),
-                name,
-                login,
-                phone
+                id = UUID(0,0),
+                roleId = UUID.fromString("c3783767-7876-4f6d-b56c-66e4607ce9ca"),
+                name = name,
+                login = login,
+                password = "12345",
+                phone = phone
             )
         )
     }

@@ -4,8 +4,10 @@ import java.util.UUID
 
 data class Employee(
     val id: UUID,
+    val roleId: UUID,
     val name: String,
     val login: String,
+    val password: String,
     val phone: String,
 ) {
     fun setId(id: UUID): Employee {
