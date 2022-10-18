@@ -4,7 +4,7 @@ import ru.ac.uniyar.domain.storage.Employee
 import ru.ac.uniyar.domain.storage.EmployeeRepository
 import java.util.UUID
 
-interface AddEmployeeOperation {
+fun interface AddEmployeeOperation {
     fun add(
         name: String,
         login: String,
