@@ -14,7 +14,7 @@ class AuthorizationFilter(
     private val permissionLens: RequestContextLens<RolePermissions>,
     private val fetchPermissionsOperation: FetchPermissionOperation
 ) : Filter {
-    override fun invoke(next: HttpHandler): HttpHandler  = { request: Request ->
+    override fun invoke(next: HttpHandler): HttpHandler = { request: Request ->
         val permissions = currentEmployee(request)?.let {
             fetchPermissionsOperation.fetch(it.roleId)
         } ?: RolePermissions.ANONYMOUS_ROLE

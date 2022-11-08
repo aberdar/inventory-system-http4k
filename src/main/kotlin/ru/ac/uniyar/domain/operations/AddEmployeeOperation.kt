@@ -1,5 +1,6 @@
 package ru.ac.uniyar.domain.operations
 
+import io.github.cdimascio.dotenv.dotenv
 import ru.ac.uniyar.domain.storage.Employee
 import ru.ac.uniyar.domain.storage.EmployeeRepository
 import java.util.UUID
@@ -20,16 +21,16 @@ class AddEmployeeOperationImplementation(
         login: String,
         phone: String,
     ): UUID {
+        val dotenv = dotenv()
         return employeeRepository.add(
             Employee(
-                id = UUID(0,0),
-                roleId = UUID.fromString("c3783767-7876-4f6d-b56c-66e4607ce9ca"),
+                id = UUID(0, 0),
+                roleId = UUID.fromString(dotenv["EMPLOYEE_ROLE_ID"]),
                 name = name,
                 login = login,
-                password = "12345",
+                password = dotenv["TEST_PASSWORD"],
                 phone = phone
             )
         )
     }
 }
-

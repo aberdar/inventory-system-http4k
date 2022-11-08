@@ -20,7 +20,7 @@ class ShowEmployeeHandler(
 ) : HttpHandler {
     override fun invoke(request: Request): Response {
         val permissions = permissionLens(request)
-        if (permissions.showEmployee){
+        if (permissions.showEmployee) {
             val user = request.path("id")?.let {
                 UUID.fromString(it)
             }?.let {

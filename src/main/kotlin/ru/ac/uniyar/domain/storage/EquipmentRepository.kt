@@ -11,7 +11,7 @@ class EquipmentRepository(equipmentList: List<Equipment>) {
 
     fun add(newEquipment: Equipment): UUID {
         var newId = newEquipment.id
-        while (equipment.containsKey(newId) || newId == UUID(0,0)) {
+        while (equipment.containsKey(newId) || newId == UUID(0, 0)) {
             newId = UUID.randomUUID()
         }
         equipment[newId] = newEquipment.setId(newId)

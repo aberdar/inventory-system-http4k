@@ -1,11 +1,20 @@
 package ru.ac.uniyar.web.handlers
 
-import org.http4k.core.*
+import org.http4k.core.Body
+import org.http4k.core.HttpHandler
+import org.http4k.core.Request
+import org.http4k.core.Response
+import org.http4k.core.Status
 import org.http4k.core.cookie.Cookie
 import org.http4k.core.cookie.SameSite
 import org.http4k.core.cookie.cookie
 import org.http4k.core.cookie.invalidateCookie
-import org.http4k.lens.*
+import org.http4k.core.with
+import org.http4k.lens.FormField
+import org.http4k.lens.Invalid
+import org.http4k.lens.Validator
+import org.http4k.lens.nonEmptyString
+import org.http4k.lens.webForm
 import ru.ac.uniyar.domain.operations.AuthorizationException
 import ru.ac.uniyar.domain.operations.AuthorizationOperation
 import ru.ac.uniyar.web.filters.JwtTools
@@ -44,9 +53,11 @@ class AuthorizationUserHandler(
                 password = passwordLens(webForm)
             )
         } catch (_: AuthorizationException) {
-            val errorsWebForm = webForm.copy(errors = webForm.errors + Invalid(
-                passwordLens.meta.copy(description = "Wrong login or password.")
-            ))
+            val errorsWebForm = webForm.copy(
+                errors = webForm.errors + Invalid(
+                    passwordLens.meta.copy(description = "Wrong login or password.")
+                )
+            )
             return Response(Status.BAD_REQUEST)
                 .with(htmlView(request) of LoginFormViewModel(errorsWebForm))
         }

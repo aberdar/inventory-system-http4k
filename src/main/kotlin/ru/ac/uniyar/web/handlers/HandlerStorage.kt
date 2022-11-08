@@ -3,7 +3,6 @@ package ru.ac.uniyar.web.handlers
 import org.http4k.core.HttpHandler
 import org.http4k.lens.RequestContextLens
 import ru.ac.uniyar.domain.operations.OperationStorage
-import ru.ac.uniyar.domain.storage.Employee
 import ru.ac.uniyar.domain.storage.RolePermissions
 import ru.ac.uniyar.web.filters.JwtTools
 import ru.ac.uniyar.web.templates.ContextAwareViewRender
@@ -60,7 +59,7 @@ class HandlerStorage(
         htmlView,
     )
 
-    val editFormEquipmentHandler: HttpHandler =  EditFormEquipmentHandler(
+    val editFormEquipmentHandler: HttpHandler = EditFormEquipmentHandler(
         operationStorage.fetchEquipmentOperation,
         htmlView,
     )

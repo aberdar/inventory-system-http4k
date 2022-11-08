@@ -1,7 +1,19 @@
 package ru.ac.uniyar.web.handlers
 
-import org.http4k.core.*
-import org.http4k.lens.*
+import org.http4k.core.Body
+import org.http4k.core.HttpHandler
+import org.http4k.core.Request
+import org.http4k.core.Response
+import org.http4k.core.Status
+import org.http4k.core.with
+import org.http4k.lens.FormField
+import org.http4k.lens.Path
+import org.http4k.lens.Validator
+import org.http4k.lens.localDate
+import org.http4k.lens.nonEmptyString
+import org.http4k.lens.string
+import org.http4k.lens.uuid
+import org.http4k.lens.webForm
 import ru.ac.uniyar.domain.operations.EditEquipmentOperation
 import ru.ac.uniyar.domain.operations.FetchEquipmentOperation
 import ru.ac.uniyar.domain.storage.Equipment
@@ -18,12 +30,14 @@ class EditFormEquipmentHandler(
 
     override fun invoke(request: Request): Response {
         val equipmentToEdit = fetchEquipmentOperation.fetch(idLens.invoke(request)) ?: return Response(Status.BAD_REQUEST)
-        return Response(Status.OK).with(htmlView(request) of EditFormEquipmentViewModel(
-            equipmentToEdit.name,
-            equipmentToEdit.productId,
-            equipmentToEdit.description,
-            equipmentToEdit.submissionDate
-        ))
+        return Response(Status.OK).with(
+            htmlView(request) of EditFormEquipmentViewModel(
+                equipmentToEdit.name,
+                equipmentToEdit.productId,
+                equipmentToEdit.description,
+                equipmentToEdit.submissionDate
+            )
+        )
     }
 }
 
@@ -62,8 +76,10 @@ class ApplyEditEquipmentHandler(
             )
             return Response(Status.FOUND).header("location", "/equipment/${equipmentToEdit.id}")
         }
-        return Response(Status.BAD_REQUEST).with(htmlView(request) of EditFormEquipmentViewModel(
-            webForm = webForm
-        ))
+        return Response(Status.BAD_REQUEST).with(
+            htmlView(request) of EditFormEquipmentViewModel(
+                webForm = webForm
+            )
+        )
     }
 }

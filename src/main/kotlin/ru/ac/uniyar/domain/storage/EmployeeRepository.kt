@@ -11,7 +11,7 @@ class EmployeeRepository(employees: List<Employee>) {
 
     fun add(employee: Employee): UUID {
         var newId = employee.id
-        while (employees.containsKey(newId) || newId == UUID(0,0)) {
+        while (employees.containsKey(newId) || newId == UUID(0, 0)) {
             newId = UUID.randomUUID()
         }
         employees[newId] = employee.setId(newId)

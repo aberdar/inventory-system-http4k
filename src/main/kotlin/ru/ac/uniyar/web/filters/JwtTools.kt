@@ -7,7 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException
 import java.time.LocalDate
 import java.time.Period
 import java.time.ZoneId
-import java.util.*
+import java.util.Date
 
 private const val ACCEPTED_LIFE_IN_SECONDS = 60L
 private const val DEFAULT_TOKEN_LIFE = 7
@@ -18,15 +18,15 @@ class JwtTools(
     private val expiresIn: Period = Period.ofDays(DEFAULT_TOKEN_LIFE)
 ) {
     private val algorithm = Algorithm.HMAC512(secret)
-    private val verifier by lazy{
+    private val verifier by lazy {
         JWT
             .require(algorithm)
             .acceptExpiresAt(ACCEPTED_LIFE_IN_SECONDS)
             .build()
     }
 
-    fun create(subject: String): String?{
-        return try{
+    fun create(subject: String): String? {
+        return try {
             JWT
                 .create()
                 .withSubject(subject)
@@ -42,18 +42,17 @@ class JwtTools(
                     )
                 )
                 .sign(algorithm)
-        } catch (_: JWTCreationException){
+        } catch (_: JWTCreationException) {
             null
         }
     }
 
     fun subject(token: String): String? {
-        return try{
+        return try {
             val decodedToken = verifier.verify(token)
             decodedToken.subject
-        } catch (_: JWTVerificationException){
+        } catch (_: JWTVerificationException) {
             null
         }
     }
-
 }

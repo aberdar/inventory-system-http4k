@@ -25,11 +25,11 @@ class AddEquipmentOperationImplementation(
     ): UUID {
         return equipmentRepository.add(
             Equipment(
-                UUID(0, 0),
-                name,
-                productId,
-                description,
-                submissionDate
+                id = UUID(0, 0),
+                name = name,
+                productId = productId,
+                description = description,
+                submissionDate = submissionDate
             )
         )
     }

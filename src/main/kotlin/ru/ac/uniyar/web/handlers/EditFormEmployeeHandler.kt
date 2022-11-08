@@ -1,13 +1,22 @@
 package ru.ac.uniyar.web.handlers
 
-import org.http4k.core.*
-import org.http4k.lens.*
+import org.http4k.core.Body
+import org.http4k.core.HttpHandler
+import org.http4k.core.Request
+import org.http4k.core.Response
+import org.http4k.core.Status
+import org.http4k.core.with
+import org.http4k.lens.FormField
+import org.http4k.lens.Path
+import org.http4k.lens.Validator
+import org.http4k.lens.nonEmptyString
+import org.http4k.lens.uuid
+import org.http4k.lens.webForm
 import ru.ac.uniyar.domain.operations.EditEmployeeOperation
 import ru.ac.uniyar.domain.operations.FetchEmployeeOperation
 import ru.ac.uniyar.domain.storage.Employee
 import ru.ac.uniyar.web.models.EditFormEmployeeViewModel
 import ru.ac.uniyar.web.templates.ContextAwareViewRender
-import java.util.*
 
 class EditFormEmployeeHandler(
     private val fetchEmployeeOperation: FetchEmployeeOperation,
@@ -19,11 +28,12 @@ class EditFormEmployeeHandler(
 
     override fun invoke(request: Request): Response {
         val employeeToEdit = fetchEmployeeOperation.fetch(idLens.invoke(request)) ?: return Response(Status.BAD_REQUEST)
-        return Response(Status.OK).with(htmlView(request) of EditFormEmployeeViewModel(
-            employeeToEdit.name,
-            employeeToEdit.login,
-            employeeToEdit.phone
-        )
+        return Response(Status.OK).with(
+            htmlView(request) of EditFormEmployeeViewModel(
+                employeeToEdit.name,
+                employeeToEdit.login,
+                employeeToEdit.phone
+            )
         )
     }
 }
@@ -62,8 +72,10 @@ class ApplyEditFormEmployeeHandler(
             )
             return Response(Status.FOUND).header("location", "/employees/${employeeToEdit.id}")
         }
-        return Response(Status.BAD_REQUEST).with(htmlView(request) of EditFormEmployeeViewModel(
-            webForm = webForm
-        ))
+        return Response(Status.BAD_REQUEST).with(
+            htmlView(request) of EditFormEmployeeViewModel(
+                webForm = webForm
+            )
+        )
     }
 }

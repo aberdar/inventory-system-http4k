@@ -1,6 +1,9 @@
 package ru.ac.uniyar
 
-import org.http4k.core.*
+import org.http4k.core.ContentType
+import org.http4k.core.HttpHandler
+import org.http4k.core.RequestContexts
+import org.http4k.core.then
 import org.http4k.filter.ServerFilters
 import org.http4k.lens.RequestContextKey
 import org.http4k.lens.RequestContextLens
@@ -62,11 +65,13 @@ fun main() {
         currentEmployeeLens,
         operationStorage.fetchUserIdOperation,
         jwtTools
-    ).then(AuthorizationFilter(
-        currentEmployeeLens,
-        permissionsLens,
-        operationStorage.fetchPermissionOperation
-    ).then(routes))
+    ).then(
+        AuthorizationFilter(
+            currentEmployeeLens,
+            permissionsLens,
+            operationStorage.fetchPermissionOperation
+        ).then(routes)
+    )
 
     val app = routes(
         authorizationApp,
